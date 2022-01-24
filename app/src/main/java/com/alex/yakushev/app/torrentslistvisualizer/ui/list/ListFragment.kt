@@ -1,25 +1,23 @@
-package com.alex.yakushev.app.torrentslistvisualizer.ui.main
+package com.alex.yakushev.app.torrentslistvisualizer.ui.list
 
 import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.DefaultItemAnimator
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.alex.yakushev.app.torrentslistvisualizer.R
-import com.alex.yakushev.app.torrentslistvisualizer.YtsServiceApplication
-import com.alex.yakushev.app.torrentslistvisualizer.model.GeneralMoviesData
 import com.alex.yakushev.app.torrentslistvisualizer.model.MovieInfo
 import com.alex.yakushev.app.torrentslistvisualizer.ui.adapter.YtsRecycleListAdapter
-import io.reactivex.android.schedulers.AndroidSchedulers
+import com.alex.yakushev.app.torrentslistvisualizer.ui.base.MainViewModelFactory
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import java.util.*
 
 
@@ -33,7 +31,7 @@ class ListFragment : Fragment() {
         val viewFragment = inflater.inflate(R.layout.fragment_list, container, false)
         mRecyclerView = viewFragment.findViewById<View>(R.id.recyclerView) as RecyclerView
         initRecyclerView()
-        initServiceApi()
+        initData()
         return viewFragment
     }
 
@@ -93,29 +91,26 @@ class ListFragment : Fragment() {
         mRecyclerView?.adapter = YtsRecycleListAdapter(ArrayList(), activity!!)
     }
 
-    private fun initServiceApi() {
-        val serviceApplication = activity?.applicationContext as YtsServiceApplication
-        val moviesObservable = serviceApplication.serviceApi?.ytsApi?.listOfMovies!!
+    private fun initData() {
+        val listViewModel = ViewModelProvider(this, MainViewModelFactory())
+            .get(ListViewModel::class.java)
 
-        mCompositeDisposable.add(
-                moviesObservable
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ inData: GeneralMoviesData? ->
-                    val movieInfoList = inData?.data?.movies
-                    val listAdapter = YtsRecycleListAdapter(movieInfoList!!, activity!!)
+        listViewModel.movieInfoList.observe(this.viewLifecycleOwner, androidx.lifecycle.Observer {
+            val listAdapter = YtsRecycleListAdapter(it, activity!!)
 
-                    listAdapter.setOnClickListener(object : YtsRecycleListAdapter.MovieInfoOnClickListener {
-                        override fun onClick(movieInfo: MovieInfo) {
-                            mListener?.onFragmentInteraction(movieInfo)
-                        }
-
-                    })
-
-                    mRecyclerView!!.adapter = listAdapter
-                }) { exception: Throwable ->
-                    Toast.makeText(activity, exception.message, Toast.LENGTH_LONG).show()
+            listAdapter.setOnClickListener(object : YtsRecycleListAdapter.MovieInfoOnClickListener {
+                override fun onClick(movieInfo: MovieInfo) {
+                    mListener?.onFragmentInteraction(movieInfo)
                 }
-        )
+            })
+
+            mRecyclerView!!.adapter = listAdapter
+        })
+
+        listViewModel.toastMessage.observe(this.viewLifecycleOwner, androidx.lifecycle.Observer {
+            Toast.makeText(activity, it, Toast.LENGTH_LONG).show()
+        })
+
+        listViewModel.fetchData()
     }
 }
