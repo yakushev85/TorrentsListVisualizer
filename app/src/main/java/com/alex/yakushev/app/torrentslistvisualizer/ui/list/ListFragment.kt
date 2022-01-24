@@ -17,14 +17,12 @@ import com.alex.yakushev.app.torrentslistvisualizer.R
 import com.alex.yakushev.app.torrentslistvisualizer.model.MovieInfo
 import com.alex.yakushev.app.torrentslistvisualizer.ui.adapter.YtsRecycleListAdapter
 import com.alex.yakushev.app.torrentslistvisualizer.ui.base.MainViewModelFactory
-import io.reactivex.disposables.CompositeDisposable
 import java.util.*
 
 
 class ListFragment : Fragment() {
     private var mListener: OnFragmentInteractionListener? = null
     private var mRecyclerView: RecyclerView? = null
-    private val mCompositeDisposable = CompositeDisposable()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -48,7 +46,6 @@ class ListFragment : Fragment() {
     override fun onDetach() {
         super.onDetach()
         mListener = null
-        mCompositeDisposable.dispose()
     }
 
     interface OnFragmentInteractionListener {

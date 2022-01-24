@@ -24,7 +24,7 @@ class DetailedFragment : Fragment() {
             val titleView = layoutView.findViewById<TextView>(R.id.titleDetailedView)
             val descriptionView = layoutView.findViewById<TextView>(R.id.descriptionDetailedView)
 
-            Picasso.with(activity)
+            Picasso.get()
                     .load(movieInfo.largeCoverImage)
                     .into(imageView)
 

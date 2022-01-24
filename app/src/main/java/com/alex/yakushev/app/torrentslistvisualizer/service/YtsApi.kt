@@ -1,7 +1,7 @@
 package com.alex.yakushev.app.torrentslistvisualizer.service
 
 import com.alex.yakushev.app.torrentslistvisualizer.model.GeneralMoviesData
-import io.reactivex.Observable
+import retrofit2.Call
 import retrofit2.http.GET
 
 /**
@@ -9,5 +9,5 @@ import retrofit2.http.GET
  */
 interface YtsApi {
     @get:GET("/api/v2/list_movies.json")
-    val listOfMovies: Observable<GeneralMoviesData?>?
+    val listOfMovies: Call<GeneralMoviesData>
 }

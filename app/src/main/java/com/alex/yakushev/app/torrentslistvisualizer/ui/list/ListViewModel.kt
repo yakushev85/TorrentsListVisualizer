@@ -2,30 +2,25 @@ package com.alex.yakushev.app.torrentslistvisualizer.ui.list
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.alex.yakushev.app.torrentslistvisualizer.model.GeneralMoviesData
+import androidx.lifecycle.viewModelScope
 import com.alex.yakushev.app.torrentslistvisualizer.model.MovieInfo
 import com.alex.yakushev.app.torrentslistvisualizer.service.ServiceApi
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.lang.Exception
 
 class ListViewModel: ViewModel() {
     val movieInfoList = MutableLiveData<List<MovieInfo>>()
     val toastMessage = MutableLiveData<String>()
 
-    private val mCompositeDisposable = CompositeDisposable()
-
     fun fetchData() {
-        val moviesObservable =ServiceApi.Instance.ytsApi.listOfMovies!!
-
-        mCompositeDisposable.add(moviesObservable
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ inData: GeneralMoviesData? ->
-                movieInfoList.value = inData?.data?.movies
-            }) { exception: Throwable ->
-                toastMessage.value = exception.message
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val generalMoviesData = ServiceApi.Instance.ytsApi.listOfMovies.execute().body()
+                movieInfoList.postValue(generalMoviesData!!.data!!.movies)
+            } catch (e: Exception) {
+                toastMessage.postValue(e.message)
             }
-        )
+        }
     }
 }

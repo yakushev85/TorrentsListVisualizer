@@ -29,9 +29,11 @@ class YtsRecycleListAdapter(private val mMovies: List<MovieInfo>, private val mC
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.titleListItem.text = mMovies[position].title
-        Picasso.with(mContext)
+
+        Picasso.get()
                 .load(mMovies[position].mediumCoverImage)
                 .into(holder.imageListItem)
+
         if (onClickListener != null) {
             holder.itemView.setOnClickListener { v: View? -> onClickListener!!.onClick(mMovies[position]) }
         }
