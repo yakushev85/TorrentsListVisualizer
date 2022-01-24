@@ -1,4 +1,4 @@
-package com.alex.yakushev.app.torrentslistvisualizer
+package com.alex.yakushev.app.torrentslistvisualizer.ui.main
 
 import android.content.Context
 import android.content.Intent
@@ -6,7 +6,9 @@ import android.net.ConnectivityManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.Toast
-import com.alex.yakushev.app.torrentslistvisualizer.ListFragment.OnFragmentInteractionListener
+import com.alex.yakushev.app.torrentslistvisualizer.ui.detailed.DetailedActivity
+import com.alex.yakushev.app.torrentslistvisualizer.ui.main.ListFragment.OnFragmentInteractionListener
+import com.alex.yakushev.app.torrentslistvisualizer.R
 import com.alex.yakushev.app.torrentslistvisualizer.model.MovieInfo
 
 class MainActivity : AppCompatActivity(), OnFragmentInteractionListener {

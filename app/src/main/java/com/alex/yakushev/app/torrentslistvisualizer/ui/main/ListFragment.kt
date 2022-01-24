@@ -1,4 +1,4 @@
-package com.alex.yakushev.app.torrentslistvisualizer
+package com.alex.yakushev.app.torrentslistvisualizer.ui.main
 
 import android.content.Context
 import android.content.res.Configuration
@@ -12,8 +12,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.alex.yakushev.app.torrentslistvisualizer.R
+import com.alex.yakushev.app.torrentslistvisualizer.YtsServiceApplication
 import com.alex.yakushev.app.torrentslistvisualizer.model.GeneralMoviesData
 import com.alex.yakushev.app.torrentslistvisualizer.model.MovieInfo
+import com.alex.yakushev.app.torrentslistvisualizer.ui.adapter.YtsRecycleListAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers

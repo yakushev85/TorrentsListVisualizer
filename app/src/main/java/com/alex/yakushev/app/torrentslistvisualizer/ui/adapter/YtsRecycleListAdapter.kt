@@ -1,4 +1,4 @@
-package com.alex.yakushev.app.torrentslistvisualizer
+package com.alex.yakushev.app.torrentslistvisualizer.ui.adapter
 
 import android.content.Context
 import androidx.recyclerview.widget.RecyclerView
@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.alex.yakushev.app.torrentslistvisualizer.R
 import com.alex.yakushev.app.torrentslistvisualizer.model.MovieInfo
 import com.squareup.picasso.Picasso
 

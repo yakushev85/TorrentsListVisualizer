@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.alex.yakushev.app.torrentslistvisualizer.MainActivity">
+    tools:context="com.alex.yakushev.app.torrentslistvisualizer.ui.main.MainActivity">
 
     <FrameLayout
         android:layout_width="match_parent"

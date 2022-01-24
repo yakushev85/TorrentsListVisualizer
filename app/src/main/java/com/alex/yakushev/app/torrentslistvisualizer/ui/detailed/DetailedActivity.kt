@@ -1,7 +1,8 @@
-package com.alex.yakushev.app.torrentslistvisualizer
+package com.alex.yakushev.app.torrentslistvisualizer.ui.detailed
 
 import android.os.Bundle
 import androidx.fragment.app.FragmentActivity
+import com.alex.yakushev.app.torrentslistvisualizer.R
 import com.alex.yakushev.app.torrentslistvisualizer.model.MovieInfo
 
 class DetailedActivity : FragmentActivity() {

@@ -13,14 +13,14 @@
         android:supportsRtl="true"
         android:name=".YtsServiceApplication"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".ui.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DetailedActivity" />
+        <activity android:name=".ui.detailed.DetailedActivity" />
     </application>
 
 </manifest>
