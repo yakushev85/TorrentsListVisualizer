@@ -1,26 +1,18 @@
 package com.alex.yakushev.app.torrentslistvisualizer.ui
 
-import android.content.Context
 import android.content.Intent
-import android.net.ConnectivityManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import android.widget.Toast
-import com.alex.yakushev.app.torrentslistvisualizer.ui.detailed.DetailedActivity
-import com.alex.yakushev.app.torrentslistvisualizer.ui.list.ListFragment.OnFragmentInteractionListener
 import com.alex.yakushev.app.torrentslistvisualizer.R
 import com.alex.yakushev.app.torrentslistvisualizer.model.MovieInfo
+import com.alex.yakushev.app.torrentslistvisualizer.ui.detailed.DetailedActivity
 import com.alex.yakushev.app.torrentslistvisualizer.ui.list.ListFragment
+import com.alex.yakushev.app.torrentslistvisualizer.ui.list.ListFragment.OnFragmentInteractionListener
 
 class MainActivity : AppCompatActivity(), OnFragmentInteractionListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        if (!isNetworkConnected) {
-            Toast.makeText(this, "No connection to internet!", Toast.LENGTH_LONG).show()
-            return
-        }
 
         val fm = supportFragmentManager
 
@@ -36,10 +28,4 @@ class MainActivity : AppCompatActivity(), OnFragmentInteractionListener {
         intent.putExtra(MovieInfo::class.java.name, movieInfo)
         startActivity(intent)
     }
-
-    private val isNetworkConnected: Boolean
-        get() {
-            val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-            return cm.activeNetworkInfo != null
-        }
 }

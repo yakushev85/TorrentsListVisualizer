@@ -85,7 +85,7 @@ class ListFragment : Fragment() {
         mRecyclerView?.addItemDecoration(dividerItemDecoration)
         mRecyclerView?.itemAnimator =
             DefaultItemAnimator()
-        mRecyclerView?.adapter = YtsRecycleListAdapter(ArrayList(), activity!!)
+        mRecyclerView?.adapter = YtsRecycleListAdapter(ArrayList(), requireActivity())
     }
 
     private fun initData() {
@@ -93,7 +93,7 @@ class ListFragment : Fragment() {
             .get(ListViewModel::class.java)
 
         listViewModel.movieInfoList.observe(this.viewLifecycleOwner, androidx.lifecycle.Observer {
-            val listAdapter = YtsRecycleListAdapter(it, activity!!)
+            val listAdapter = YtsRecycleListAdapter(it, requireActivity())
 
             listAdapter.setOnClickListener(object : YtsRecycleListAdapter.MovieInfoOnClickListener {
                 override fun onClick(movieInfo: MovieInfo) {
